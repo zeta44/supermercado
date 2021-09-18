@@ -5,41 +5,44 @@
         <section class="container ">
             <div class="row my-5">
                 <div class="col-12">
-                    <form action="" method="POST">
-                        <input type="hidden" name="id" >
+                    <form action="/produtos_editar" method="POST">
+                        <input type="hidden" name="id" value="<%=id%>" >
+                        <div class="form-group">
+                            <label for="nome">Produto</label>
+                            <input class="form-control" type="text" id="nome" name="nome" value="<%=nome%>" placeholder="Nome do produto" required>
+                        </div>
                         <div class="form-group">
                             <label for="fornecedor">Fornecedor</label>
-                            <select name="" id="">
+                            <select class="form-control" name="fornecedor_id" id="fornecedor_id">
+                                <option selected>Escolha o fronecedor</option>
                                 <% fornecedores.forEach(function(fornecedor){ %>
-                                    <option value="<%= fornecedor.id %>"><%= fornecedor.nome %></option>
+                                    <option value="<%= fornecedor.id %>" <%= fornecedor.id == fornecedor_id ? 'selected' : ''%>><%= fornecedor.nome %></option>
                                 <% }) %>
                             </select>
                         </div>
                         
                         <div class="form-group">
                             <label for="volume">Especificação Volume</label>
-                            <select name="" id="volume_id">
+                            <select class="form-control" name="volume_id" id="volume_id" required>
+                                <option selected>Tipo de empacotamento</option>
                                 <% volumes.forEach(function(volume){ %>
-                                    <option value="<%= volume.id %>"><%= volume.nome %></option>
+
+                                    <option value="<%= volume.id %>" <%= volume.id == volume_id ? 'selected' : ''%>><%= volume.nome %></option>
                                 <% }) %>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="setor_id">Localização</label>
-                            <select name="" id="setor_id">
+                            <label for="setor_id">Setor</label>
+                            <select class="form-control" name="setor_id" id="setor_id">
+                                <option selected>Destino da mercadoria</option>
                                 <% setores.forEach(function(setor){ %>
-                                    <option value="<%= setor.id %>"><%= setor.nome %></option>
+                                    <option value="<%= setor.id %>" <%= setor.id == setor_id ? 'selected' : ''%>><%= setor.nome %></option>
                                 <% }) %>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="nome">Produto</label>
-                            <input class="form-control" type="text" id="nome" name="nome"
-                                placeholder="Nome do produto" required>
-                        </div>
+                        
                         <div>
                             <input class="btn btn-success" type="submit" value="Salvar">
-                           
                         </div>
                     </form>
 

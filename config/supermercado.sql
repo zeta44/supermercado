@@ -6,8 +6,6 @@ USE supermercados;
 
 DROP TABLE IF EXISTS fornecedores CASCADE;
 
-DROP TABLE IF EXISTS funcionarios CASCADE;
-
 DROP TABLE IF EXISTS cargos CASCADE;
 
 DROP TABLE IF EXISTS vendas CASCADE;
@@ -34,6 +32,10 @@ CREATE TABLE IF NOT EXISTS fornecedores(
     id INT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL,
     cnpj VARCHAR(30) NOT NULL,
+    telefone VARCHAR(30) NOT NULL,
+    email VARCHAR(30) NOT NULL,
+    UNIQUE (telefone),
+    UNIQUE (email),
     PRIMARY KEY(id)
 );
 
@@ -43,14 +45,12 @@ CREATE TABLE IF NOT EXISTS volumes (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE IF NOT EXISTS produtos (
+ CREATE TABLE IF NOT EXISTS produtos (
     id INT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL,
-    volume VARCHAR(10) NOT NULL,
-    estoque INT NOT NULL,
-    setor_id INT,
-    fornecedor_id INT,
     volume_id INT,
+    fornecedor_id INT,
+    setor_id INT,   
     PRIMARY KEY(id),
     FOREIGN KEY(setor_id) REFERENCES setores(id),
     FOREIGN KEY(fornecedor_id) REFERENCES fornecedores(id),
@@ -80,14 +80,27 @@ CREATE TABLE IF NOT EXISTS funcionarios(
 
 CREATE TABLE IF NOT EXISTS vendas (
     id INT NOT NULL AUTO_INCREMENT,
+    nf VARCHAR(50),
     total FLOAT NOT NULL,
     cliente_id INT NOT NULL,
     produdo_id INT NOT NULL,
+    quantidade INT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(cliente_id) REFERENCES clientes(id),
     FOREIGN KEY(produdo_id) REFERENCES produtos(id)
 );
 
+CREATE TABLE IF NOT EXISTS compras (
+    id INT NOT NULL AUTO_INCREMENT,
+    nf VARCHAR(50),
+    total FLOAT NOT NULL,
+    fornecedor_id INT NOT NULL,
+    produdo_id INT NOT NULL,
+    quantidade INT NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(fornecedor_id) REFERENCES fornecedores(id),
+    FOREIGN KEY(produdo_id) REFERENCES produtos(id)
+);
 
 INSERT INTO
     cargos(nome)
@@ -105,8 +118,8 @@ INSERT INTO
 values
 ('Guiche'),
 ('Açougue'),
-('Estoque'),
-('Gerencia');
+('Armazem'),
+('Gerência');
 
 INSERT INTO 
 	volumes(nome)
@@ -120,21 +133,25 @@ values
 ('Caixa');
     
 INSERT INTO
-    fornecedores(nome, cnpj)
+    fornecedores(nome, cnpj, telefone, email)
 values
-('Queijos e C&A', '12121/00001-00'),
-('Babado de Vaca', '78121/00001-01'),
-('Tapioca de Deus', '125654/00001-00'),
-('Topifaive', '15521/00001-00');
+('Queijos e C&A', '12121/00001-00', '8599563107', 'exemplo1@exemplo.com'),
+('Babado de Vaca', '78121/00001-01', '8596215407', 'exemplo2@exemplo.com'),
+('Tapioca de Deus', '125654/00001-00', '8596258107', 'exemplo3@exemplo.com'),
+('Topifaive', '15521/00001-00', '8592853107', 'exemplo4@exemplo.com');
 
 INSERT INTO
-    produtos(nome, volume, estoque, setor_id, volume_id)
+    produtos(nome, volume_id, fornecedor_id, setor_id)
 values
-('Arroz', '1kg', 1000, 3, 4),
-('Feijão', '1kg', 1000, 3, 4),
-('Café', '1Pk', 700, 3, 5),
-('Azeite', '1l', 50, 3, 3),
-('Açúcar', '1kg', 60, 3, 7);
+('Arroz', 5, 1, 3),
+('Feijão', 5, 1, 3),
+('Café', 5, 1, 3),
+('Azeite', 3, 3, 3),
+('Açúcar', 5, 4, 3);
+
+ 
+
+
 
 INSERT INTO
     clientes(cpf, nome)
@@ -155,10 +172,4 @@ values
 (45885652145, 'Maria da Silva', 'BBB2235', 4, 2),
 (65666932012, 'Mariroca da Silva', 'BBB1135', 1, 3);
 
-INSERT INTO
-    vendas(total, cliente_id, produdo_id)
-values
-(70.50, 1, 1),
-(7.50, 2, 1),
-(45.50, 3, 1),
-(60.50, 4, 1);
+
