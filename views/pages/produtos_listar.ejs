@@ -43,7 +43,7 @@
                                 <th>Volume</th>
                                 <th>Fornecedor</th>
                                 <th>Setor</th>
-                               
+                                <th>Estoque</th>
                                 <th>Ações</th>
                                 
                             </tr>
@@ -63,7 +63,9 @@
                                     <td>
                                         <%= item.setor_nome %>
                                     </td>
-                                    
+                                    <td>
+                                        <%= item.estoque %>
+                                    </td>
                                     <td>
                                         <a class="btn btn-warning" href="produtos_editar/?id=<%=item.id %>"><i
                                                 class="ico icofont-edit"></i></a>

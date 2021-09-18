@@ -30,7 +30,7 @@ exports.produtos_editar_get = (req, res) => {
                             })
                             .then(() => {
                                 model.title = "Cadastro de Produtos",
-                                    res.render("./views/pages/produtos_editar", model);
+                                res.render("./views/pages/produtos_editar", model);
                             })
                     })
             });

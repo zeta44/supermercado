@@ -26,6 +26,10 @@ function list() {
             ,v.nome as volume_nome
             ,f.nome as fornecedor_nome
             ,s.nome as setor_nome
+            ,p.preco
+            ,(IFNULL((select sum(quantidade) from compras where compras.produto_id = p.id), 0)
+            -
+            (IFNULL((select sum(quantidade) from vendas where vendas.produto_id = p.id), 0))) as estoque
         from produtos as p
         join fornecedores as f on p.fornecedor_id = f.id
         join setores as s on p.setor_id = s.id

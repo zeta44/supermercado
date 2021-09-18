@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS volumes (
     volume_id INT,
     fornecedor_id INT,
     setor_id INT,   
+    preco FLOAT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(setor_id) REFERENCES setores(id),
     FOREIGN KEY(fornecedor_id) REFERENCES fornecedores(id),
@@ -83,23 +84,22 @@ CREATE TABLE IF NOT EXISTS vendas (
     nf VARCHAR(50),
     total FLOAT NOT NULL,
     cliente_id INT NOT NULL,
-    produdo_id INT NOT NULL,
+    produto_id INT NOT NULL,
     quantidade INT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(cliente_id) REFERENCES clientes(id),
-    FOREIGN KEY(produdo_id) REFERENCES produtos(id)
+    FOREIGN KEY(produto_id) REFERENCES produtos(id)
 );
 
 CREATE TABLE IF NOT EXISTS compras (
     id INT NOT NULL AUTO_INCREMENT,
     nf VARCHAR(50),
     total FLOAT NOT NULL,
-    fornecedor_id INT NOT NULL,
-    produdo_id INT NOT NULL,
+    produto_id INT NOT NULL,
     quantidade INT NOT NULL,
+    datahora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
-    FOREIGN KEY(fornecedor_id) REFERENCES fornecedores(id),
-    FOREIGN KEY(produdo_id) REFERENCES produtos(id)
+    FOREIGN KEY(produto_id) REFERENCES produtos(id)
 );
 
 INSERT INTO
@@ -141,16 +141,13 @@ values
 ('Topifaive', '15521/00001-00', '8592853107', 'exemplo4@exemplo.com');
 
 INSERT INTO
-    produtos(nome, volume_id, fornecedor_id, setor_id)
+    produtos(nome, volume_id, fornecedor_id, setor_id, preco)
 values
-('Arroz', 5, 1, 3),
-('Feijão', 5, 1, 3),
-('Café', 5, 1, 3),
-('Azeite', 3, 3, 3),
-('Açúcar', 5, 4, 3);
-
- 
-
+('Arroz', 5, 1, 3, 4.50),
+('Feijão', 5, 1, 3, 5.50),
+('Café', 5, 1, 3, 3.50),
+('Azeite', 3, 3, 3, 7.80),
+('Açúcar', 5, 4, 3, 4.50);
 
 
 INSERT INTO
