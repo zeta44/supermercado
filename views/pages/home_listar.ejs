@@ -1,0 +1,29 @@
+<%- include("../partials/header"); %>
+
+
+  <main>
+    <section class="container">
+      <div class="row my-5">
+        <% produtos.forEach(function(item){ %>
+        <div class="card-rows mx-1">
+          <div class="card col-12">
+            <img class="card-img-top" src=".\img\produtos\arroz.jpg" alt="Imagem de capa do card">
+            <div class="card-body">
+              <h5 class="card-title">
+                <%= item.nome %>
+              </h5>
+              <p class="card-text">
+                Preço: <%= item.preco %>
+              </p>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </section>
+  </main>
+
+
+
+
+  <%- include("../partials/footer"); %>

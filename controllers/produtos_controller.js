@@ -52,7 +52,8 @@ exports.produtos_editar_get = (req, res) => {
             nome:'',
             fornecedor_id: '',
             volume_id: '',
-            setor_id: ''
+            setor_id: '',
+            preco: ''
         };
         performRender(model);
     }

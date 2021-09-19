@@ -26,6 +26,11 @@ $(document).ready(function () {
       nota_fiscal: 'Informe a nota fiscal',
       produto_id: 'Selecione um produto',
       total: 'Informe o valor total contido na nota para o item'
-    }
+    },
+    submitHandler: function (form) {
+      if ($('#form').valid())
+        form.submit();
+      return false; // prevent normal form posting
+    },
   });
 });

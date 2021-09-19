@@ -55,12 +55,14 @@ function save(produto) {
             (nome,
             volume_id,
             fornecedor_id,
-            setor_id)
+            setor_id,
+            preco)
             VALUES(
             '${produto.nome}',
             '${produto.volume_id}',
             '${produto.fornecedor_id}',
-            '${produto.setor_id}');
+            '${produto.setor_id}',
+            '${produto.preco}');
             
             `
         }
@@ -71,7 +73,8 @@ function save(produto) {
             nome = '${produto.nome}',
             volume_id = '${produto.volume_id}',
             fornecedor_id = '${produto.fornecedor_id}',
-            setor_id = '${produto.setor_id}'
+            setor_id = '${produto.setor_id}',
+            preco = '${produto.preco}'
             WHERE id = '${produto.id}';
             `
         }

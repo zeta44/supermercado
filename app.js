@@ -16,10 +16,12 @@ app.use(express.static("public"));
 const produtos_router = require('./routers/produtos_router');
 const compras_router = require('./routers/compras_router');
 const vendas_router = require('./routers/vendas_router');
+const home_router = require('./routers/home_router');
 
 produtos_router.map(router);
 compras_router.map(router);
 vendas_router.map(router);
+home_router.map(router);
 
 app.use('/', router);
 
