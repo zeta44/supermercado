@@ -47,7 +47,13 @@ exports.produtos_editar_get = (req, res) => {
             });
     }
     else {
-        model = {};
+        model = {
+            id:'',
+            nome:'',
+            fornecedor_id: '',
+            volume_id: '',
+            setor_id: ''
+        };
         performRender(model);
     }
 };
@@ -60,3 +66,12 @@ exports.produtos_editar_post = (req, res) => {
             res.redirect("/produtos_listar");
         })
 };
+
+exports.produtos_deletar_get = (req, res) => {
+    let id = req.query.id
+
+    produtos_model.remove(id)
+    .then(()=> {
+        res.redirect("/produtos_listar");
+    })
+}

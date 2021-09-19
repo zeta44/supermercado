@@ -10,7 +10,7 @@
             </div>
             <div class="row my-5">
                 <div class="col-12">
-                    <form action="/vendas_cadastrar" method="POST">
+                    <form id="form" action="/vendas_cadastrar" method="POST">
                         <label for="cliente_id">Cliente</label>
                         <select class="form-control" name="cliente_id" id="cliente_id">
                             <option selected>Escolha o cliente</option>
@@ -57,3 +57,4 @@
         </section>
     </main>
     <%- include("../partials/footer"); %>
+    <script src="js/vendas_cadastrar.js"></script>

@@ -5,7 +5,12 @@
         <section class="container ">
             <div class="row my-5">
                 <div class="col-12">
-                    <form action="" method="POST">
+                    <ul class="list-group" id="errors"></ul>
+                </div>
+            </div>
+            <div class="row my-5">
+                <div class="col-12">
+                    <form id="form" action="" method="POST">
                         <div class="form-group">
                             <label for="produto">Produto</label>
                             <select class="form-control" name="produto_id" id="produto">
@@ -49,3 +54,4 @@
 
 
     <%- include("../partials/footer"); %>
+    <script src="js/compras_cadastrar.js"></script>

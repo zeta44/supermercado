@@ -34,6 +34,7 @@ function list() {
         join fornecedores as f on p.fornecedor_id = f.id
         join setores as s on p.setor_id = s.id
         join volumes as v on p.volume_id = v.id
+        WHERE ativo = 1
 
         `
         db.query(qr, function (err, result) {
@@ -85,6 +86,30 @@ function save(produto) {
     });
 }
 
+function remove(id) {
+
+    return new Promise((resolve, reject) => {
+        let qr = `
+            UPDATE produtos
+            SET
+            ativo = 0
+            WHERE 
+            id = ${id}
+            `
+        
+
+        db.query(qr, function (err, result) {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(result);
+        })
+    });
+}
+
+
+
 module.exports.list = list
 module.exports.save = save
+module,exports.remove = remove
 module.exports.getById = getById

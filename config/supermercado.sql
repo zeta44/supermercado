@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS volumes (
     fornecedor_id INT,
     setor_id INT,   
     preco FLOAT NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE,
     PRIMARY KEY(id),
     FOREIGN KEY(setor_id) REFERENCES setores(id),
     FOREIGN KEY(fornecedor_id) REFERENCES fornecedores(id),
