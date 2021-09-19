@@ -6,12 +6,63 @@ const produtos_model = require('../models/produtos_model')
 
 
 exports.fornecedores_listar_get = (req, res) => {
-    fornecedores_model.list().then((fornecedores)=>{
+    fornecedores_model.list().then((fornecedores) => {
         let model = {
             title: "Lista de Fornecedores",
             fornecedores: fornecedores
         };
-        res.render("./views/pages/fornecedores_listar", model);
+        res.render("./views/pages/fornecedores_editar", model);
     })
 }
 
+exports.fornecedores_editar_get = (req, res) => {
+
+    function performRender(model) {
+        fornecedores_model.list()
+            .then((fornecedores) => {
+                model.fornecedores = fornecedores;
+                model.title = "Cadastro de Produtos";
+                res.render("./views/pages/fornecedores_editar", model);
+            });
+
+    };
+
+    let model;
+
+    if (req.query.id) {
+        fornecedores_model.getById(req.query.id)
+            .then((fornecedor) => {
+                model = fornecedor;
+                performRender(model);
+            });
+    }
+    else {
+        model = {
+            id: '',
+            nome: '',
+            cnpj: '',
+            telefone: '',
+            email: ''
+
+        };
+        performRender(model);
+    }
+};
+
+
+exports.fornecedores_editar_post = (req, res) => {
+    let fornecedor = req.body
+
+    fornecedor.save(fornecedor)
+        .then(() => {
+            res.redirect("/fornecedores_editar");
+        })
+};
+
+exports.fornecedores_deletar_get = (req, res) => {
+    let fornecedor = req.query.id;
+    fornecedores_model.remove(fornecedor)
+        .then(() => {
+            res.redirect("/fornecedores_listar");
+        })
+}

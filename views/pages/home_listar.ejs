@@ -1,25 +1,40 @@
 <%- include("../partials/header"); %>
-
+<%- include("../partials/navigation_bar"); %>
 
   <main>
     <section class="container">
-      <div class="row my-5">
-        <% produtos.forEach(function(item){ %>
-        <div class="card-rows mx-1">
-          <div class="card col-12">
-            <img class="card-img-top" src=".\img\produtos\arroz.jpg" alt="Imagem de capa do card">
-            <div class="card-body">
-              <h5 class="card-title">
+      <div class="row coll-12 my-5">
+        <h1>Nossos Produtos</h1>
+      </div>
+      <% produtos.forEach(function(item){ %>
+        <div class="col-3 d-inline-flex my-2">
+          <div class="card p-3">
+            <div class="text-center">
+              <img class="img imf-fluid" src=".\img\produtos\1.png">
+            </div>
+            <div class="product-details"> <span class="font-weight-bold d-block">R$ <%= (item.preco>= 0)
+                  ? item.preco.toFixed(2).padStart(5)
+                  : "-" + (-1 * item.preco ).toFixed(2).padStart(5,'0') %></span> <span>
                 <%= item.nome %>
-              </h5>
-              <p class="card-text">
-                Preço: <%= item.preco %>
-              </p>
+              </span>
+              <div class="buttons d-flex flex-row">
+                <div class="cart">
+                  <i class="fa fa-shopping-cart"></i>
+                </div>
+                <button
+                  class="btn btn-success cart-button btn-block"><span class="dot">1</span>Add à Compra
+                </button>
+              </div>
+              <div class="weight">
+                <small>
+                  Por 1 <%= item.volume_nome %>
+                </small> 
+              </div>
             </div>
           </div>
         </div>
         <% }) %>
-      </div>
+
     </section>
   </main>
 

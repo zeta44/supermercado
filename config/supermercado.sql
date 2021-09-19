@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS fornecedores(
     cnpj VARCHAR(30) NOT NULL,
     telefone VARCHAR(30) NOT NULL,
     email VARCHAR(30) NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE,
     UNIQUE (telefone),
     UNIQUE (email),
     PRIMARY KEY(id)

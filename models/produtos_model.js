@@ -114,5 +114,5 @@ function remove(id) {
 
 module.exports.list = list
 module.exports.save = save
-module,exports.remove = remove
+module.exports.remove = remove
 module.exports.getById = getById

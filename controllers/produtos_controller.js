@@ -30,7 +30,7 @@ exports.produtos_editar_get = (req, res) => {
                             })
                             .then(() => {
                                 model.title = "Cadastro de Produtos",
-                                res.render("./views/pages/produtos_editar", model);
+                                    res.render("./views/pages/produtos_editar", model);
                             })
                     })
             });
@@ -48,8 +48,8 @@ exports.produtos_editar_get = (req, res) => {
     }
     else {
         model = {
-            id:'',
-            nome:'',
+            id: '',
+            nome: '',
             fornecedor_id: '',
             volume_id: '',
             setor_id: '',
@@ -69,10 +69,9 @@ exports.produtos_editar_post = (req, res) => {
 };
 
 exports.produtos_deletar_get = (req, res) => {
-    let id = req.query.id
-
-    produtos_model.remove(id)
-    .then(()=> {
-        res.redirect("/produtos_listar");
-    })
+    let produto = req.query.id;
+    produtos_model.remove(produto)
+        .then(() => {
+            res.redirect("/produtos_listar");
+        })
 }
