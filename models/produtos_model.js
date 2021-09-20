@@ -17,7 +17,7 @@ function getById(id) {
     });
 }
 
-function list() {
+function list(pesquisa) {
     return new Promise((resolve, reject) => {
         let qr = `
         select 
@@ -34,10 +34,16 @@ function list() {
         join fornecedores as f on p.fornecedor_id = f.id
         join setores as s on p.setor_id = s.id
         join volumes as v on p.volume_id = v.id
-        WHERE p.ativo = 1
+        WHERE p.ativo = 1 
+        `;
 
-        `
-        db.query(qr, function (err, result) {
+        if (pesquisa && pesquisa != '') {
+            qr += ` and LOWER(CONCAT(p.nome, v.nome, f.nome, s.nome)) LIKE LOWER(?)`;
+        }
+        console.log(qr);
+
+
+        db.query(qr, [`%${pesquisa}%`], function (err, result) {
             if (err) {
                 return reject(err);
             }
@@ -49,6 +55,7 @@ function list() {
 function save(produto) {
 
     return new Promise((resolve, reject) => {
+        let qrparams;
         let qr;
         if (produto.id == '') {
             qr = `INSERT INTO produtos
@@ -58,29 +65,42 @@ function save(produto) {
             setor_id,
             preco)
             VALUES(
-            '${produto.nome}',
-            '${produto.volume_id}',
-            '${produto.fornecedor_id}',
-            '${produto.setor_id}',
-            '${produto.preco}');
+            ?,
+            ?,
+            ?,
+            ?,
+            ?)
             
-            `
+            `;
+            qrparams = [produto.nome,
+            produto.volume_id,
+            produto.fornecedor_id,
+            produto.setor_id,
+            produto.preco];
         }
         else {
             qr = `
             UPDATE produtos
             SET
-            nome = '${produto.nome}',
-            volume_id = '${produto.volume_id}',
-            fornecedor_id = '${produto.fornecedor_id}',
-            setor_id = '${produto.setor_id}',
-            preco = '${produto.preco}'
-            WHERE id = '${produto.id}';
-            `
+            nome = ?,
+            volume_id = ?,
+            fornecedor_id = ?,
+            setor_id = ?,
+            preco = ?
+            WHERE id = ?
+            `;
+
+            qrparams = [produto.nome,
+            produto.volume_id,
+            produto.fornecedor_id,
+            produto.setor_id,
+            produto.preco,
+            produto.id];
         }
 
 
-        db.query(qr, function (err, result) {
+
+        db.query(qr, qrparams, function (err, result) {
             if (err) {
                 return reject(err);
             }
@@ -99,7 +119,7 @@ function remove(id) {
             WHERE 
             id = ${id}
             `
-        
+
 
         db.query(qr, function (err, result) {
             if (err) {

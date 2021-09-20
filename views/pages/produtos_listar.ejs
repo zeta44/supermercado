@@ -12,8 +12,8 @@
                         <h1 id="consulta">Lista dos Produtos</h1>
                     </div>
                     <div class="col-6">
-                        <form class="d-flex" action="/pesquisa" method="GET">
-                            <input type="text" class="form-control" placeholder="Pesquisar" name="sh" required />
+                        <form class="d-flex" action="/produtos_listar" method="GET">
+                            <input type="text" class="form-control" placeholder="Pesquisar" name="pesquisa" required />
                             <button class="btn btn-light d-inline-flex" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-search" viewBox="0 0 16 16">
@@ -57,7 +57,7 @@
                                         <%= item.estoque %>
                                     </td>
                                     <td>
-                                        <a class="btn btn-warning" href="produtos_editar/?id=<%=item.id %>"><i
+                                        <a class="btn btn-warning" href="/produtos_editar/?id=<%=item.id %>"><i
                                                 class="ico icofont-edit"></i></a>
                                         <!-- Botão para acionar modal -->
                                         <button type="button" class="btn btn-primary" data-toggle="modal"

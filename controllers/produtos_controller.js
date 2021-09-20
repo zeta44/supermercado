@@ -6,7 +6,10 @@ const produtos_model = require('../models/produtos_model')
 
 
 exports.produtos_listar_get = (req, res) => {
-    produtos_model.list().then((produtos) => {
+
+    let pesquisa = req.query.pesquisa;
+
+    produtos_model.list(pesquisa).then((produtos) => {
         let model = {
             title: "Cadastro de Produtos",
             produtos: produtos,
