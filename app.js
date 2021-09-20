@@ -18,6 +18,7 @@ const compras_router = require('./routers/compras_router');
 const vendas_router = require('./routers/vendas_router');
 const home_router = require('./routers/home_router');
 const fornecedores_router = require('./routers/fornecedores_router');
+const clientes_router = require('./routers/clientes_router');
 
 
 produtos_router.map(router);
@@ -25,6 +26,7 @@ compras_router.map(router);
 vendas_router.map(router);
 home_router.map(router);
 fornecedores_router.map(router);
+clientes_router.map(router);
 
 app.use('/', router);
 

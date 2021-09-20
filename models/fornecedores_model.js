@@ -8,10 +8,12 @@ function getById(id) {
             if (err) {
                 return reject(err);
             }
-            if (result.length) {
+            else if (result.length > 0) {
                 return resolve(result[0]);
             }
-            return null;
+            else {
+                return null;
+            }
         })
     });
 }
@@ -53,9 +55,9 @@ function save(fornecedor) {
             UPDATE fornecedores
             SET
             nome = '${fornecedor.nome}',
-            volume_id = '${fornecedor.cnpj}',
-            fornecedor_id = '${fornecedor.telefone}',
-            setor_id ='${fornecedor.email}'
+            cnpj = '${fornecedor.cnpj}',
+            telefone = '${fornecedor.telefone}',
+            email ='${fornecedor.email}'
             WHERE id = '${fornecedor.id}';
             `
         }

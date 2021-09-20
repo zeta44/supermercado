@@ -11,7 +11,7 @@ exports.fornecedores_listar_get = (req, res) => {
             title: "Lista de Fornecedores",
             fornecedores: fornecedores
         };
-        res.render("./views/pages/fornecedores_editar", model);
+        res.render("./views/pages/fornecedores_listar", model);
     })
 }
 
@@ -53,7 +53,7 @@ exports.fornecedores_editar_get = (req, res) => {
 exports.fornecedores_editar_post = (req, res) => {
     let fornecedor = req.body
 
-    fornecedor.save(fornecedor)
+    fornecedores_model.save(fornecedor)
         .then(() => {
             res.redirect("/fornecedores_editar");
         })

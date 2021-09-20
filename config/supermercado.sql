@@ -35,7 +35,6 @@ CREATE TABLE IF NOT EXISTS fornecedores(
     telefone VARCHAR(30) NOT NULL,
     email VARCHAR(30) NOT NULL,
     ativo BOOLEAN DEFAULT TRUE,
-    UNIQUE (telefone),
     UNIQUE (email),
     PRIMARY KEY(id)
 );
@@ -64,6 +63,9 @@ CREATE TABLE IF NOT EXISTS clientes (
     id INT NOT NULL AUTO_INCREMENT,
     cpf VARCHAR(30) NOT NULL,
     nome VARCHAR(50) NOT NULL,
+    telefone VARCHAR(30) NOT NULL,
+    email VARCHAR(30) NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE,
     UNIQUE (cpf),
     PRIMARY KEY(id)
 );
@@ -88,6 +90,7 @@ CREATE TABLE IF NOT EXISTS vendas (
     cliente_id INT NOT NULL,
     produto_id INT NOT NULL,
     quantidade INT NOT NULL,
+    datahora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
     FOREIGN KEY(cliente_id) REFERENCES clientes(id),
     FOREIGN KEY(produto_id) REFERENCES produtos(id)
@@ -153,12 +156,12 @@ values
 
 
 INSERT INTO
-    clientes(cpf, nome)
+    clientes(cpf, nome, telefone, email)
 values
-('45632180358', 'José Joaquim'),
-('45632180357', 'Maria Joaquina'),
-('45631280358', 'Patrícia Silva'),
-('45321080358', 'Iolanda Pozon');
+('45632180358', 'José Joaquim', '8566215487', 'exemplo9@exemplo.com'),
+('45632180357', 'Maria Joaquina', '5622354872', 'exemplo8@exemplo.com'),
+('45631280358', 'Patrícia Silva', '2155698562', 'exemplo7@exemplo.com'),
+('45321080358', 'Iolanda Pozon', '5422369523', 'exemplo6@exemplo.com');
 
 
 

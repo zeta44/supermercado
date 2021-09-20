@@ -4,14 +4,16 @@ exports.list = () => {
     return new Promise((resolve, reject) => {
         let qr = `
         SELECT 
-            c.id
-            ,c.nf
+            v.id
+            ,v.nf
             ,p.nome as produto_nome
-            ,c.quantidade
-            ,c.total
-            ,c.datahora
-        FROM compras as c
-        JOIN produtos as p on c.produto_id = p.id
+            ,c.nome as cliente_nome
+            ,v.quantidade
+            ,v.total
+            ,v.datahora
+        FROM vendas as v
+        JOIN produtos as p on v.produto_id = p.id
+        JOIN clientes as c on v.cliente_id = c.id
         `
         db.query(qr, function (err, result) {
             if (err) {
@@ -32,7 +34,8 @@ exports.save = (venda) => {
             cliente_id,
             produto_id,
             quantidade,
-            total)
+            total,
+            datahora)
             VALUES
             ('${venda.nf}',
             ${venda.cliente_id},

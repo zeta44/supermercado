@@ -27,6 +27,20 @@ exports.vendas_cadastrar_post = (req, res) => {
             res.redirect("/vendas_cadastrar")
         })
         .catch((reason) => {
-            res.send(reason);
+
+            var model = req.body;
+            model.error = 'reason'
+            res.render("./views/pages/vendas_cadastrar", model);
         });
+}
+
+exports.vendas_listar_get = (req, res) => {
+    vendas_model.list()
+    .then((vendas)=> {
+        var model = {
+            title: 'vendas',
+            vendas: vendas
+        }
+        res.render("./views/pages/vendas_listar", model);
+    })
 }

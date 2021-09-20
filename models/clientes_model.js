@@ -20,7 +20,7 @@ function getById(id) {
 function list() {
     return new Promise((resolve, reject) => {
         let qr = `
-        select * from clientes
+        select * from clientes WHERE ativo = 1
 
         `
         db.query(qr, function (err, result) {
@@ -34,44 +34,70 @@ function list() {
 
 function save(cliente) {
 
-    // return new Promise((resolve, reject) => {
-    //     let qr;
-    //     if (produto.id == '') {
-    //         qr = `INSERT INTO produtos
-    //         (nome,
-    //         volume_id,
-    //         fornecedor_id,
-    //         setor_id)
-    //         VALUES(
-    //         '${produto.nome}',
-    //         '${produto.volume_id}',
-    //         '${produto.fornecedor_id}',
-    //         '${produto.setor_id}');
+    return new Promise((resolve, reject) => {
+        let qr;
+        if (cliente.id == '') {
+            qr = `INSERT INTO clientes
+            (nome,
+            cpf,
+            telefone,
+            email)
+            VALUES(
+            '${cliente.nome}',
+            '${cliente.cpf}',
+            '${cliente.telefone}',
+            '${cliente.email}'
+            );
             
-    //         `
-    //     }
-    //     else {
-    //         qr = `
-    //         UPDATE produtos
-    //         SET
-    //         nome = '${produto.nome}',
-    //         volume_id = '${produto.volume_id}',
-    //         fornecedor_id = '${produto.fornecedor_id}',
-    //         setor_id = '${produto.setor_id}'
-    //         WHERE id = '${produto.id}';
-    //         `
-    //     }
+            `
+        }
+        else {
+            qr = `
+            UPDATE clientes
+            SET
+            nome = '${cliente.nome}',
+            cpf = '${cliente.cpf}',
+            telefone = '${cliente.telefone}',
+            email ='${cliente.email}'
+            WHERE id = '${cliente.id}';
+            `
+        }
 
 
-    //     db.query(qr, function (err, result) {
-    //         if (err) {
-    //             return reject(err);
-    //         }
-    //         return resolve(result);
-    //     })
-    // });
+        db.query(qr, function (err, result) {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(result);
+        })
+    });
 }
+
+function remove(id) {
+
+    return new Promise((resolve, reject) => {
+        let qr = `
+            UPDATE clientes
+            SET
+            ativo = 0
+            WHERE 
+            id = ${id}
+            `
+        
+
+        db.query(qr, function (err, result) {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(result);
+        })
+    });
+}
+
+
+
 
 module.exports.list = list
 module.exports.save = save
+module.exports.remove = remove
 module.exports.getById = getById

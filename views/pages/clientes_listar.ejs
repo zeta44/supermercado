@@ -9,22 +9,11 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-6 text-left">
-                        <h1 id="consulta">Lista dos Fornecedores</h1>
+                        <h1 id="consulta">Lista dos Clientes</h1>
                     </div>
                     <div class="col-6">
                         <form class="d-flex" action="/pesquisa" method="GET">
-
-                            <select class="form-control" name="campo" id="campo">
-                                <option value="all" selected>Todos</option>
-                                <option value="titulo">Título</option>
-                                <option value="autor">Autor</option>
-                                <option value="editora">Editora</option>
-
-                            </select>
-
-
                             <input type="text" class="form-control" placeholder="Pesquisar" name="sh" required />
-
                             <button class="btn btn-light d-inline-flex" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-search" viewBox="0 0 16 16">
@@ -41,7 +30,7 @@
                         <thead>
                             <tr>
                                 <th>Nome</th>
-                                <th>CNPJ</th>
+                                <th>CPF</th>
                                 <th>Telefone</th>
                                 <th>E-mail</th>
                                
@@ -50,13 +39,13 @@
                             </tr>
                         </thead>
                         <tbody id="tabela">
-                            <% fornecedores.forEach(function(item){ %>
+                            <% clientes.forEach(function(item){ %>
                                 <tr>
                                     <td>
                                         <%= item.nome %>
                                     </td>
                                     <td>
-                                        <%= item.cnpj %>
+                                        <%= item.cpf %>
                                     </td>
                                     <td>
                                         <%= item.telefone %>
@@ -67,7 +56,7 @@
                                     
                                   
                                     <td>
-                                        <a class="btn btn-warning" href="fornecedores_editar/?id=<%=item.id %>"><i
+                                        <a class="btn btn-warning" href="clientes_editar/?id=<%=item.id %>"><i
                                                 class="ico icofont-edit"></i></a>
                                         <!-- Botão para acionar modal -->
                                         <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -92,13 +81,13 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                Confirma a exclusão do fornecedor <%= item.nome %>?
+                                                Confirma a exclusão do cliente <%= item.nome %>?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-dismiss="modal">Fechar</button>
                                                 <a class="btn btn-danger"
-                                                    href="fornecedores_deletar/?id=<%=item.id %>">Deletar</a>
+                                                    href="clientes_deletar/?id=<%=item.id %>">Deletar</a>
                                             </div>
                                         </div>
                                     </div>

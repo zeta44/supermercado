@@ -9,12 +9,11 @@
                 <div class="col-12">
                     <div class="row">
                         <div class="col-6 text-left">
-                            <h1 id="consulta">Lista dos Compras</h1>
+                            <h1 id="consulta">Lista das Vendas</h1>
                         </div>
                         <div class="col-6">
-                            <form class="d-flex" action="/produtos_listar" method="GET">
+                            <form class="d-flex" action="/pesquisa" method="GET">
                                 <input type="text" class="form-control" placeholder="Pesquisar" name="sh" required />
-
                                 <button class="btn btn-light d-inline-flex" type="submit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-search" viewBox="0 0 16 16">
@@ -29,7 +28,8 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Nota Fiscal</th>
+                                    <th>NF</th>
+                                    <th>Cliente</th>
                                     <th>Produto</th>
                                     <th>Quantidade</th>
                                     <th>Total</th>
@@ -37,10 +37,13 @@
                                 </tr>
                             </thead>
                             <tbody id="tabela">
-                                <% compras.forEach(function(item){ %>
+                                <% vendas.forEach(function(item){ %>
                                     <tr>
                                         <td>
                                             <%= item.nf %>
+                                        </td>
+                                        <td>
+                                            <%= item.cliente_nome %>
                                         </td>
                                         <td>
                                             <%= item.produto_nome %>
