@@ -17,13 +17,16 @@ function getById(id) {
     });
 }
 
-function list() {
+function list(pesquisa) {
     return new Promise((resolve, reject) => {
         let qr = `
-        select * from clientes WHERE ativo = 1
+        select * from clientes WHERE ativo = 1`;
 
-        `
-        db.query(qr, function (err, result) {
+        if (pesquisa && pesquisa != '') {
+            qr += ' AND LOWER(CONCAT(nome, cpf, telefone, email)) LIKE ? '
+        }
+
+        db.query(qr, [`%${pesquisa}%`], function (err, result) {
             if (err) {
                 return reject(err);
             }
@@ -35,6 +38,7 @@ function list() {
 function save(cliente) {
 
     return new Promise((resolve, reject) => {
+        let qrparams;
         let qr;
         if (cliente.id == '') {
             qr = `INSERT INTO clientes
@@ -42,29 +46,34 @@ function save(cliente) {
             cpf,
             telefone,
             email)
-            VALUES(
-            '${cliente.nome}',
-            '${cliente.cpf}',
-            '${cliente.telefone}',
-            '${cliente.email}'
-            );
-            
-            `
+            VALUES(?,?,?,?)`;
+            qrparams = [cliente.nome,
+                cliente.cpf,
+                cliente.telefone,
+                cliente.email]
+
+
+
         }
         else {
             qr = `
             UPDATE clientes
             SET
-            nome = '${cliente.nome}',
-            cpf = '${cliente.cpf}',
-            telefone = '${cliente.telefone}',
-            email ='${cliente.email}'
-            WHERE id = '${cliente.id}';
-            `
+            nome = ?,
+            cpf = ?',
+            telefone = ?,
+            email = ?
+            WHERE id = ?;
+            `;
+            qrparams = [cliente.nome,
+                cliente.cpf,
+                cliente.telefone,
+                cliente.email,
+                cliente.id]
         }
 
 
-        db.query(qr, function (err, result) {
+        db.query(qr, qrparams, function (err, result) {
             if (err) {
                 return reject(err);
             }
@@ -81,11 +90,11 @@ function remove(id) {
             SET
             ativo = 0
             WHERE 
-            id = ${id}
-            `
+            id =?
+            `;
         
 
-        db.query(qr, function (err, result) {
+        db.query(qr, [id], function (err, result) {
             if (err) {
                 return reject(err);
             }

@@ -12,18 +12,9 @@
                         <h1 id="consulta">Lista dos Fornecedores</h1>
                     </div>
                     <div class="col-6">
-                        <form class="d-flex" action="/pesquisa" method="GET">
+                        <form class="d-flex" action="/fornecedores_listar" method="GET">
 
-                            <select class="form-control" name="campo" id="campo">
-                                <option value="all" selected>Todos</option>
-                                <option value="titulo">Título</option>
-                                <option value="autor">Autor</option>
-                                <option value="editora">Editora</option>
-
-                            </select>
-
-
-                            <input type="text" class="form-control" placeholder="Pesquisar" name="sh" required />
+                            <input type="text" class="form-control" placeholder="Pesquisar" name="pesquisa" required />
 
                             <button class="btn btn-light d-inline-flex" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

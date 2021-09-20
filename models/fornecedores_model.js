@@ -19,10 +19,15 @@ function getById(id) {
 }
 
 
-function list() {
+function list(pesquisa) {
     return new Promise((resolve, reject) => {
-        let qr = `SELECT * FROM fornecedores WHERE ativo = 1`
-        db.query(qr, function (err, result) {
+        let qr = `SELECT * FROM fornecedores WHERE ativo = 1`;
+
+        if (pesquisa && pesquisa != '') {
+            qr += ' AND LOWER(CONCAT(nome, cnpj, telefone, email)) LIKE ? '
+        }
+
+        db.query(qr, [`%${pesquisa}%`], function (err, result) {
             if (err) {
                 return reject(err);
             }
@@ -34,6 +39,8 @@ function list() {
 function save(fornecedor) {
 
     return new Promise((resolve, reject) => {
+        
+        let qrparams;
         let qr;
         if (fornecedor.id == '') {
             qr = `INSERT INTO fornecedores
@@ -41,29 +48,33 @@ function save(fornecedor) {
             cnpj,
             telefone,
             email)
-            VALUES(
-            '${fornecedor.nome}',
-            '${fornecedor.cnpj}',
-            '${fornecedor.telefone}',
-            '${fornecedor.email}'
-            );
-            
-            `
+            VALUES
+            (?,?,?,?)`;
+            qrparams = [fornecedor.nome,
+                fornecedor.cnpj,
+                fornecedor.telefone,
+                fornecedor.email]
+
         }
         else {
             qr = `
             UPDATE fornecedores
             SET
-            nome = '${fornecedor.nome}',
-            cnpj = '${fornecedor.cnpj}',
-            telefone = '${fornecedor.telefone}',
-            email ='${fornecedor.email}'
-            WHERE id = '${fornecedor.id}';
-            `
+            nome = ?,
+            cnpj = ?,
+            telefone = ?,
+            email = ?
+            WHERE id = ?;
+            `;
+            qrparams = [fornecedor.nome,
+                fornecedor.cnpj,
+                fornecedor.telefone,
+                fornecedor.email,
+                fornecedor.id]
         }
 
 
-        db.query(qr, function (err, result) {
+        db.query(qr, qrparams, function (err, result) {
             if (err) {
                 return reject(err);
             }
@@ -80,11 +91,11 @@ function remove(id) {
             SET
             ativo = 0
             WHERE 
-            id = ${id}
-            `
+            id = ?
+            `;
         
 
-        db.query(qr, function (err, result) {
+        db.query(qr, [id], function (err, result) {
             if (err) {
                 return reject(err);
             }

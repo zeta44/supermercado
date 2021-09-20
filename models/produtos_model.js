@@ -117,11 +117,11 @@ function remove(id) {
             SET
             ativo = 0
             WHERE 
-            id = ${id}
+            id = ?
             `
 
 
-        db.query(qr, function (err, result) {
+        db.query(qr, [id], function (err, result) {
             if (err) {
                 return reject(err);
             }

@@ -6,7 +6,8 @@ const produtos_model = require('../models/produtos_model')
 
 
 exports.fornecedores_listar_get = (req, res) => {
-    fornecedores_model.list().then((fornecedores) => {
+    let pesquisa = req.query.pesquisa
+    fornecedores_model.list(pesquisa).then((fornecedores) => {
         let model = {
             title: "Lista de Fornecedores",
             fornecedores: fornecedores

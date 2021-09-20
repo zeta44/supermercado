@@ -2,7 +2,8 @@ const clientes_model = require('../models/clientes_model');
 
 
 exports.clientes_listar_get = (req, res) => {
-    clientes_model.list().then((clientes) => {
+    let pesquisa = req.query.pesquisa
+    clientes_model.list(pesquisa).then((clientes) => {
         let model = {
             title: "Lista de clientes",
             clientes: clientes
