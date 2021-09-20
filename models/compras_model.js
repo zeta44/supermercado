@@ -1,6 +1,6 @@
 const db = require('../config/db_connection');
 
-exports.list = () => {
+exports.list = (pesquisa) => {
     return new Promise((resolve, reject) => {
         let qr = `
         SELECT 
@@ -12,8 +12,12 @@ exports.list = () => {
             ,c.datahora
         FROM compras as c
         JOIN produtos as p on c.produto_id = p.id
-        `
-        db.query(qr, function (err, result) {
+        `;
+        if (pesquisa && pesquisa != '') {
+            qr += ' WHERE LOWER(CONCAT(c.nf, p.nome)) LIKE ?'
+        }
+
+        db.query(qr, [`%${pesquisa}%`], function (err, result) {
             if (err) {
                 return reject(err);
             }
@@ -25,6 +29,8 @@ exports.list = () => {
 exports.save = (compra) => {
 
     return new Promise((resolve, reject) => {
+
+        let qrparams;
         let qr = `INSERT INTO compras 
             (
             nf,
@@ -32,15 +38,14 @@ exports.save = (compra) => {
             produto_id,
             quantidade)
             VALUES
-            ('${compra.nf}',
-            ${compra.total},
-            ${compra.produto_id},
-            ${compra.quantidade}
-            );
-            `
+            (?,?,?,?)`;
+        qrparams = [compra.nf,
+        compra.total,
+        compra.produto_id,
+        compra.quantidade]
 
 
-        db.query(qr, function (err, result) {
+        db.query(qr, qrparams, function (err, result) {
             if (err) {
                 return reject(err);
             }
